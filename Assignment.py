@@ -31,13 +31,14 @@ def get_best_match_pages_list(list_of_pages_queries, max_no_key_words):
     werghts_per_query = {}
     for q in dict_of_queries:
         temp = get_weights_of_pages(dict_of_pages, dict_of_queries[q], weights)
-        werghts_per_query[q] = list(reversed(sorted(temp.items(), key=lambda x: x[1])))
+        werghts_per_query[q] = list(reversed(sorted(temp.items(), key=lambda x: ((x[1]), int(x[0][1:])))))
     output_list = []   
     for question in werghts_per_query:
         temp_string = ''
         for caluclated_weights in werghts_per_query[question]:
-            temp_string+=caluclated_weights[0]+ ' '
-        output_list.append(question+': '+temp_string.strip()) 
+            if caluclated_weights[1] != 0:
+                temp_string+=caluclated_weights[0]+ ' '
+        output_list.append(question+': ' + temp_string.strip()) 
     return output_list, werghts_per_query
 
     
